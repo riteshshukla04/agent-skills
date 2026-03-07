@@ -1,0 +1,20 @@
+{
+  "name": "agent-skills",
+  "owner": {
+    "name": "Ritesh Shukla",
+    "email": "riteshshukla04@gmail.com",
+    "url": "https://github.com/riteshshukla04"
+  },
+  "metadata": {
+    "description": "Agent-optimized skills for building React Native Nitro Modules",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "build-nitro-modules",
+      "description": "End-to-end skill for building React Native Nitro Modules in a monorepo. Covers Nitrogen scaffold, HybridObject TypeScript specs, native codegen, Swift/Kotlin/C++ implementation, example app wiring, and npm publishing.",
+      "source": "./",
+      "skills": ["./skills/build-nitro-modules"]
+    }
+  ]
+}
