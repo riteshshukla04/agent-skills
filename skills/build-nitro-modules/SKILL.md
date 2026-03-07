@@ -15,6 +15,8 @@ End-to-end skill for building a React Native Nitro Module: monorepo scaffolding 
 
 Nitro Modules use a codegen pipeline (`nitrogen`) that reads `.nitro.ts` spec files and generates native C++/Swift/Kotlin boilerplate. You then fill in the implementation. This is fundamentally different from old-style turbo modules.
 
+> **NEVER modify any file inside `nitrogen/generated/`.** These files are fully regenerated every time `npx nitrogen` runs — any manual edits will be silently overwritten. Always edit only the `.nitro.ts` spec file, then re-run nitrogen to regenerate.
+
 ## Ask First — Before Doing Anything
 
 **First, determine what the user wants to do:**
