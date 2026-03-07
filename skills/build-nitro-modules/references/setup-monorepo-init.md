@@ -11,9 +11,9 @@ Covers Steps 1–3: setting up the monorepo structure, getting the library name,
 ## Quick Commands
 
 ```bash
-# Ask user for library name (e.g. react-native-math)
-# Then scaffold:
+# After collecting answers to all upfront questions, scaffold:
 npx nitrogen@latest init react-native-math
+# This places the library in packages/react-native-math/
 
 # After scaffold, install from root:
 bun install
@@ -21,31 +21,65 @@ bun install
 
 ## When to Use
 
-- Starting any new Nitro module from scratch
+- **Only for new libraries** — if the user is adding a HybridObject to an existing library, skip this file entirely and go to [spec-hybrid-object.md](spec-hybrid-object.md)
+- Starting a new Nitro module library from scratch
 - Setting up the monorepo workspace before writing specs
 
 ## Prerequisites
 
 - Node.js and Bun installed
-- A root directory that will serve as the monorepo root
+- Answers collected from the user (see Ask First section in SKILL.md)
 
 ## Step-by-Step
 
-### 1. Always prefer a monorepo setup
+### 1. Collect answers before doing anything
 
-Nitro modules work best in a monorepo structure with:
-- `packages/` — the native library
-- `example/` — the example app for testing
-- Root `package.json` managing workspaces
+Ask the user all of the following before running any command:
 
-### 2. Ask the user for the library name
+| Question | Default |
+|----------|---------|
+| What is the library name? (e.g. `react-native-math`) | — required |
+| Use monorepo with `packages/<name>` folder? | **yes** |
+| Create an example app to test the module? | **yes** |
+| iOS language: `swift` or `cpp`? | **swift** |
+| Android language: `kotlin` or `cpp`? | **kotlin** |
+| What does this module do? (brief description) | — required |
+
+Only proceed once all questions are answered.
+
+### 2. Set up the monorepo structure
+
+The library **must** live in `packages/<name>` inside a monorepo root. This is the standard structure:
+
+```
+<root>/
+├── packages/
+│   └── react-native-math/     ← library lives here
+├── example/                   ← example app (if requested)
+└── package.json               ← root workspace config
+```
+
+If a root `package.json` does not exist yet, create one:
+
+```json
+{
+  "name": "react-native-math-root",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "example"
+  ]
+}
+```
+
+### 3. Confirm the library name
 
 The library name should:
-- Follow npm naming convention: `react-native-<domain>` (e.g. `react-native-math`, `react-native-camera`)
+- Follow npm naming: `react-native-<domain>` (e.g. `react-native-math`, `react-native-camera`)
 - Be lowercase, hyphen-separated
-- Reflect the module's purpose clearly
+- Reflect the module's purpose
 
-### 3. Scaffold with Nitrogen
+### 4. Scaffold with Nitrogen
 
 Run from the monorepo root:
 
@@ -55,7 +89,7 @@ npx nitrogen@latest init react-native-math
 
 This creates `packages/react-native-math/` with the full library structure.
 
-### 4. Verify the generated folder structure
+### 5. Verify the generated folder structure
 
 ```
 packages/react-native-math/
@@ -73,7 +107,7 @@ packages/react-native-math/
 └── package.json
 ```
 
-### 5. Add to root workspace
+### 6. Add to root workspace
 
 In the monorepo root `package.json`:
 
@@ -92,7 +126,7 @@ In the monorepo root `package.json`:
 }
 ```
 
-### 6. Install from root
+### 7. Install from root
 
 ```bash
 bun install

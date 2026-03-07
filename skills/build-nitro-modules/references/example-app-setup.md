@@ -23,6 +23,7 @@ bun install
 
 ## When to Use
 
+- **Only proceed with this file if the user confirmed they want an example app** (asked in the initial questions)
 - After native implementation is complete and you need a testable example app
 - When setting up the monorepo for the first time
 

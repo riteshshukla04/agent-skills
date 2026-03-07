@@ -15,6 +15,35 @@ End-to-end skill for building a React Native Nitro Module: monorepo scaffolding 
 
 Nitro Modules use a codegen pipeline (`nitrogen`) that reads `.nitro.ts` spec files and generates native C++/Swift/Kotlin boilerplate. You then fill in the implementation. This is fundamentally different from old-style turbo modules.
 
+## Ask First — Before Doing Anything
+
+**First, determine what the user wants to do:**
+
+> "Are you creating a **new Nitro Module library** from scratch, or adding a **new HybridObject** to an existing library?"
+
+---
+
+### If creating a new library — ask all of these before any command:
+
+1. **Library name** — What should the library be called? (e.g. `react-native-math`)
+2. **Monorepo with `packages/` folder** — Should the library live in `packages/<name>` inside a monorepo? *(Strongly recommended — default: yes)*
+3. **Example app** — Should an example app be created to test the module? *(Recommended — default: yes)*
+4. **Native languages** — Which platforms and languages?
+   - iOS: `swift` (default) or `cpp`
+   - Android: `kotlin` (default) or `cpp`
+   - Cross-platform C++ only: both `cpp`
+5. **Module purpose** — Briefly describe what the module does so the correct spec methods can be designed
+
+Do not proceed past Step 1 of the build sequence until all five questions are answered.
+
+### If adding a HybridObject to an existing library — ask only:
+
+1. **HybridObject name** — What should the new HybridObject be called? (e.g. `Camera`, `Crypto`)
+2. **Native languages** — iOS: `swift` or `cpp`? Android: `kotlin` or `cpp`?
+3. **Purpose** — What does this HybridObject do?
+
+Then skip directly to [spec-hybrid-object.md][spec-hybrid-object] (write the spec), [spec-nitro-json.md][spec-nitro-json] (add autolinking entry), [native-nitrogen-codegen.md][native-nitrogen-codegen] (re-run nitrogen), and the relevant native implementation file. Skip all setup, monorepo, and example app steps.
+
 ## Typical Build Sequence
 
 ```bash
@@ -58,9 +87,9 @@ Reference these guidelines when:
 | 5 | C++ implementation | HIGH | [native-implement-cpp.md][native-implement-cpp] |
 | 6 | Kotlin implementation | HIGH | [native-implement-kotlin.md][native-implement-kotlin] |
 | 7 | Swift implementation | HIGH | [native-implement-swift.md][native-implement-swift] |
-| 8 | Example app setup | HIGH | [example-app-setup.md][example-app-setup] |
-| 9 | Android Gradle paths | HIGH | [example-android-config.md][example-android-config] |
-| 10 | Metro + install + test | HIGH | [example-metro-install.md][example-metro-install] |
+| 8 | Example app setup *(if requested)* | HIGH | [example-app-setup.md][example-app-setup] |
+| 9 | Android Gradle paths *(if example app)* | HIGH | [example-android-config.md][example-android-config] |
+| 10 | Metro + install + test *(if example app)* | HIGH | [example-metro-install.md][example-metro-install] |
 | 11 | npm publish prep | MEDIUM | [spec-package-publish.md][spec-package-publish] |
 
 ## Quick Reference
