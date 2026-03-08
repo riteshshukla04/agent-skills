@@ -152,6 +152,42 @@ override fun promiseThatResolvesVoidInstantly(): Promise<Unit> {
 }
 ```
 
+### Accessing Android Context
+
+Use `NitroModules.applicationContext` to get the `ReactApplicationContext` as it can be accessed anywhere in your hybrid objects. Always access it lazily via a property — never store it in a field, as it can be null during initialization.
+
+```kotlin
+import android.content.Context
+import android.content.SharedPreferences
+import com.margelo.nitro.NitroModules
+
+@Keep
+@DoNotStrip
+class HybridStorage : HybridStorageSpec() {
+
+  // Lazily access context — throws if not yet set
+  private val context: ReactApplicationContext
+    get() = NitroModules.applicationContext ?: throw Error("No ApplicationContext set!")
+
+  // Use context to get system services or app storage
+  private val sharedPreferences: SharedPreferences
+    get() = context.getSharedPreferences("com.margelo.storage", Context.MODE_PRIVATE)
+
+  override fun getString(key: String): String? {
+    return sharedPreferences.getString(key, null)
+  }
+
+  override fun setString(key: String, value: String) {
+    sharedPreferences.edit().putString(key, value).apply()
+  }
+}
+```
+
+**Rules:**
+- Always use `get()` — never `val context = NitroModules.applicationContext` at class level, it may be null at construction time
+- Always null-check with `?: throw Error(...)` so failures are explicit, not silent NPEs
+- `ReactApplicationContext` is a subclass of Android `Context` — use it for `getSharedPreferences`, `getSystemService`, file access, etc.
+
 ### Using callbacks
 
 ```kotlin
@@ -190,6 +226,8 @@ override fun divide(a: Double, b: Double): Double {
 - **`Array<Double>` vs `DoubleArray`** — Number arrays use `DoubleArray` (primitive), other types use `Array<T>`
 - **`Promise.async` vs `Promise.parallel`** — Use `async` for IO/coroutine work, `parallel` for CPU-bound sync work
 - **Calling blocking code outside `Promise.async`** — Network calls, delay, etc. must be inside `Promise.async { }` (uses coroutines)
+- **Storing `NitroModules.applicationContext` in a field** — It can be null at construction time; always access it via a `get()` property
+- **Not null-checking `applicationContext`** — Always use `?: throw Error("No ApplicationContext set!")` to fail explicitly
 
 ## Related Skills
 
