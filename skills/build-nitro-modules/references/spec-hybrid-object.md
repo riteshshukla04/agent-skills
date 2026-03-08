@@ -91,11 +91,13 @@ interface Math extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
 
 In the `HybridObject<{ ... }>` generic:
 - `ios: 'swift'` — iOS implemented in Swift
-- `ios: 'cpp'` — iOS implemented in C++ (cross-platform)
+- `ios: 'c++'` — iOS implemented in C++ (cross-platform)
 - `android: 'kotlin'` — Android implemented in Kotlin
-- `android: 'cpp'` — Android implemented in C++ (cross-platform)
+- `android: 'c++'` — Android implemented in C++ (cross-platform)
 
-For C++ only (both platforms): `HybridObject<{ ios: 'cpp'; android: 'cpp' }>`
+For C++ only (both platforms): `HybridObject<{ ios: 'c++'; android: 'c++' }>`
+
+> **Note:** In the `.nitro.ts` spec the language is `'c++'`, but in `nitro.json` autolinking it is `"cpp"` (no `+` signs). These are two different places with different spellings — don't mix them up.
 
 ### 5. Export the HybridObject (Step 10)
 
