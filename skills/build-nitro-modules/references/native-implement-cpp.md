@@ -39,7 +39,7 @@ namespace margelo::nitro::math {
 ## Prerequisites
 
 - Nitrogen has generated `HybridMathSpec.hpp` in `nitrogen/generated/shared/`
-- `nitro.json` has `"cpp": "HybridMath"` in the autolinking block
+- `nitro.json` has `"all": { "language": "c++", "implementationClassName": "HybridMath" }` in the autolinking block
 
 ## Step-by-Step
 
@@ -210,6 +210,6 @@ void HybridMath::compute(double input, std::function<void(double)> onResult) {
 ## Related Skills
 
 - [native-nitrogen-codegen.md](native-nitrogen-codegen.md) — Must generate specs before implementing
-- [spec-nitro-json.md](spec-nitro-json.md) — Configure `"cpp"` in autolinking
+- [spec-nitro-json.md](spec-nitro-json.md) — Configure `"c++"` in autolinking
 - [native-implement-kotlin.md](native-implement-kotlin.md) — Android Kotlin alternative
 - [native-implement-swift.md](native-implement-swift.md) — iOS Swift alternative

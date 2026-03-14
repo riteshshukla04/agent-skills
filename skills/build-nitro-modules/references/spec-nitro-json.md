@@ -23,8 +23,14 @@ Covers Step 5: updating `nitro.json` with all required fields for Nitrogen codeg
   },
   "autolinking": {
     "Math": {
-      "swift": "HybridMath",
-      "kotlin": "HybridMath"
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridMath"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridMath"
+      }
     }
   }
 }
@@ -88,16 +94,35 @@ This is how Nitro knows which native class handles each HybridObject:
 ```json
 "autolinking": {
   "Math": {
-    "swift": "HybridMath",
-    "kotlin": "HybridMath"
+    "ios": {
+      "language": "swift",
+      "implementationClassName": "HybridMath"
+    },
+    "android": {
+      "language": "kotlin",
+      "implementationClassName": "HybridMath"
+    }
+  }
+}
+```
+
+For C++ cross-platform (single implementation for iOS + Android):
+
+```json
+"autolinking": {
+  "Math": {
+    "all": {
+      "language": "c++",
+      "implementationClassName": "HybridMath"
+    }
   }
 }
 ```
 
 Rules:
 - The key (`"Math"`) must **exactly match** the string passed to `NitroModules.createHybridObject<Math>('Math')`
-- `"swift"` / `"kotlin"` values are the native class names that implement the spec
-- For C++ (cross-platform): use `"cpp": "HybridMath"` instead
+- Each entry requires `language` and `implementationClassName`
+- Use `"all"` for a shared C++ implementation; use `"ios"` / `"android"` for platform-specific Swift/Kotlin
 - The native classes must be **default-constructible** (no required constructor arguments)
 
 ### 5. Multiple HybridObjects
@@ -105,12 +130,24 @@ Rules:
 ```json
 "autolinking": {
   "Math": {
-    "swift": "HybridMath",
-    "kotlin": "HybridMath"
+    "ios": {
+      "language": "swift",
+      "implementationClassName": "HybridMath"
+    },
+    "android": {
+      "language": "kotlin",
+      "implementationClassName": "HybridMath"
+    }
   },
   "Crypto": {
-    "swift": "HybridCrypto",
-    "kotlin": "HybridCrypto"
+    "ios": {
+      "language": "swift",
+      "implementationClassName": "HybridCrypto"
+    },
+    "android": {
+      "language": "kotlin",
+      "implementationClassName": "HybridCrypto"
+    }
   }
 }
 ```
@@ -144,7 +181,10 @@ Rules:
   },
   "autolinking": {
     "Math": {
-      "cpp": "HybridMath"
+      "all": {
+        "language": "c++",
+        "implementationClassName": "HybridMath"
+      }
     }
   }
 }
@@ -165,8 +205,14 @@ Rules:
   },
   "autolinking": {
     "Math": {
-      "swift": "HybridMath",
-      "kotlin": "HybridMath"
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridMath"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridMath"
+      }
     }
   },
   "ignorePaths": ["node_modules", "example"],

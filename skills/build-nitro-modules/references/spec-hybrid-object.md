@@ -97,7 +97,7 @@ In the `HybridObject<{ ... }>` generic:
 
 For C++ only (both platforms): `HybridObject<{ ios: 'c++'; android: 'c++' }>`
 
-> **Note:** In the `.nitro.ts` spec the language is `'c++'`, but in `nitro.json` autolinking it is `"cpp"` (no `+` signs). These are two different places with different spellings — don't mix them up.
+> **Note:** Both the `.nitro.ts` spec and `nitro.json` autolinking use `"c++"`. In `nitro.json`, the C++ autolinking entry uses `"all": { "language": "c++", "implementationClassName": "HybridMath" }`.
 
 ### 5. Export the HybridObject (Step 10)
 
